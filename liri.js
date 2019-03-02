@@ -47,7 +47,7 @@ Music(arg1,arg2)
 const api_key = "2694c0ab";
 const api_URL = `http://www.omdbapi.com/?apikey=${api_key}&t=${arg2}&type=movie&r=json`;
 
-function getMovie() {
+function getMovie(arg1,arg2) {
   if (arg1 === "movie-this") {
 axios.get(api_URL)
   .then(function (response) {
@@ -82,11 +82,39 @@ getMovie(arg1,arg2)
  //Movie
 
 
- 
-//Concert
-//Concert
+
+//Bands in Town
+
+const bands_URL = `https://rest.bandsintown.com/artists/${arg2}/events?app_id=codingbootcamp`
+
+function getBands(arg1,arg2) {
+  if(arg1 === "concert-this") {
+axios.get(bands_URL)
+  .then(function (response) {
+    console.log(response.data)
+
+    const venue_Name = response.data[0].venue.name;
+    const venue_city_Location = response.data[0].venue.city;
+    const venue_country_Location = response.data[0].venue.country;
+    const event_Date = response.data[0].datetime
+
+    const concert_Results = {
+      Venue: venue_Name,
+      Location: venue_city_Location, venue_country_Location,
+      Date: event_Date.slice(0,10)
+    }
+    console.log(concert_Results)
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+ };
+};
+getBands(arg1,arg2);
+//Bands in Town
 
 //Do
+
 //Do
 
 
