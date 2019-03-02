@@ -1,5 +1,4 @@
-require("dotenv").config();
-var fs = require('fs')
+const fs = require('fs')
 const Spotify = require('node-spotify-api');
 const axios = require('axios');
 const moment = require('moment')
@@ -82,7 +81,6 @@ getMovie(arg1,arg2)
  //Movie
 
 
-
 //Bands in Town
 
 const bands_URL = `https://rest.bandsintown.com/artists/${arg2}/events?app_id=codingbootcamp`
@@ -91,7 +89,6 @@ function getBands(arg1,arg2) {
   if(arg1 === "concert-this") {
 axios.get(bands_URL)
   .then(function (response) {
-    console.log(response.data)
 
     const venue_Name = response.data[0].venue.name;
     const venue_city_Location = response.data[0].venue.city;
@@ -114,15 +111,30 @@ getBands(arg1,arg2);
 //Bands in Town
 
 //Do
+function randomDo(arg1) {
+  if (arg1 === "do-what-it-says") {
+fs.readFile("random.txt", "utf8", function(err, data) {
+  if (err) {
+    return console.log(err);
+  }
+  const split = data.split(", ")
 
+  const commandA = split[0]
+  const commandB = split[1]
+
+  console.log(commandA)
+
+  if (commandA === 'movie-this') {
+    getMovie(commandA,commandB);
+  }
+  else if(commandA === 'spotify-this-song') {
+    Music(commandA, commandB);
+  }
+  else if(commandA === 'concert-this') {
+    getBands(commandA,commandB);
+    }
+  });
+ }
+}
+randomDo(arg1);
 //Do
-
-
-
-//   fs.appendFile("sample.txt", newData, function(err) {
-
-//     // If an error was experienced we will log it.
-//     if (err) {
-//       console.log(err);
-//     }
-//   });
